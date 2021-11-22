@@ -62,29 +62,8 @@ public class GameController : MonoBehaviour {
     }
 
     Vector3 convertIndexToTile(int index) {
-
-        int yMod = 0;
-
-        if (index < 8) {
-            yMod = 0;
-        } else if (index < 16) {
-            yMod = 1;
-        } else if (index < 24) {
-            yMod = 2;
-        } else if (index < 32) {
-            yMod = 3;
-        } else if (index < 40) {
-            yMod = 4;
-        } else if (index < 48) {
-            yMod = 5;
-        } else if (index < 56) {
-            yMod = 6;
-        } else if (index < 64) {
-            yMod = 7;
-        }
-
-        float x = ((index % 8) * 12.7f) + 5.5f;
-        float z = (yMod * 12.7f) + 5.5f;
+        float x = (index % 8 * 12.7f) + 5.5f;
+        float z = (float)((System.Math.Floor(index/8.0) * 12.7f) + 5.5f);
         return new Vector3(x, 1f, z);
     }
 
