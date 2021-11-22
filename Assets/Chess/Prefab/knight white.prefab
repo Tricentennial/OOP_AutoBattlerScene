@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 4725869263940052}
   - component: {fileID: 33760360304955868}
   - component: {fileID: 23898234336450358}
-  m_Layer: 0
+  - component: {fileID: 6294495230264560283}
+  m_Layer: 6
   m_Name: knight white
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1943414466066380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -81,3 +82,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &6294495230264560283
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943414466066380}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.0546632
+  m_Height: 3.3494008
+  m_Direction: 1
+  m_Center: {x: -0.011557609, y: 1.6746916, z: 0.14846921}
