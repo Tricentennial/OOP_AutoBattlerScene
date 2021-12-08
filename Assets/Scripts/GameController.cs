@@ -94,11 +94,11 @@ public class GameController : MonoBehaviour {
     // destination: the index where the piece is going to move, if valid
     Vector3 moveToTile(int source, int destination) {
         // Check if index is a valid move
-
+        return null;
     }
 
     int convertTileToCoordinates(int index) {
-
+        return null;
     }
 
     Vector3 convertIndexToTile(int index) {

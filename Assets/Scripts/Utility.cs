@@ -35,11 +35,11 @@ class Utility : MonoBehaviour {
     // destination: the index where the piece is going to move, if valid
     public static Vector3 moveToTile(int source, int destination) {
         // Check if index is a valid move
-
+        return null;
     }
 
     public static int convertTileToCoordinates(int index) {
-
+        return null;
     }
 
     public static Vector3 convertIndexToTile(int index) {
