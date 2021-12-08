@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
+    public enum Direction {
+        FORWARD,
+        BACKWARD, 
+        LEFT,
+        RIGHT
+    }
+
     public GameObject whitePawn;
     public GameObject whiteRook;
     public GameObject whiteKnight;
@@ -18,6 +25,13 @@ public class GameController : MonoBehaviour {
     public GameObject blackQueen;
     public GameObject blackKing;
 
+    // This object is for keeping track of which tile a piece is on.
+    // Therefore being able to use the index to tell where a piece is on the board.
+
+
+    
+    // 8, 9, 10, 11, 12, 13, 14, 15
+    // 0, 1, 2,  3,  4,  5,  6,  7
     private GameObject[] boardTiles = new GameObject[64];
 
     private RaycastHit hitInfo;
@@ -34,6 +48,8 @@ public class GameController : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         cam = Camera.main;
+
+        Debug.WriteLine(Utility.test());
 
         initPieces();
     }
@@ -59,6 +75,30 @@ public class GameController : MonoBehaviour {
                 draggedObject = null;
             }
         }
+    }
+
+    Vector3 moveToTile(Direction dir, int currentIndex) {
+        switch (dir) {
+            case Direction.FORWARD:
+                return convertIndexToTile(currentIndex + 8);
+            case Direction.RIGHT:
+                return convertIndexToTile(currentIndex + 1);
+            case Direction.BACKWARD:
+                return convertIndexToTile(currentIndex - 8);
+            case Direction.LEFT:
+                return convertIndexToTile(currentIndex - 1);
+        }
+    }
+
+    // source: the index where the piece currently is before moving
+    // destination: the index where the piece is going to move, if valid
+    Vector3 moveToTile(int source, int destination) {
+        // Check if index is a valid move
+
+    }
+
+    int convertTileToCoordinates(int index) {
+
     }
 
     Vector3 convertIndexToTile(int index) {
