@@ -1,4 +1,9 @@
-class Utility {
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+class Utility : MonoBehaviour {
 
     public enum Direction {
         FORWARD,
@@ -7,7 +12,7 @@ class Utility {
         RIGHT
     }
 
-    String test() {
+    string test() {
         return "This is a test string!";
     }
 
