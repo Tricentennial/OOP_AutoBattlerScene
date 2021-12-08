@@ -26,6 +26,8 @@ class Utility : MonoBehaviour {
                 return convertIndexToTile(currentIndex - 8);
             case Direction.LEFT:
                 return convertIndexToTile(currentIndex - 1);
+            default:
+                return convertIndexToTile(currentIndex);
         }
     }
 

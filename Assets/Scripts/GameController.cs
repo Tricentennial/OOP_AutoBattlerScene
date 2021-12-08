@@ -49,7 +49,7 @@ public class GameController : MonoBehaviour {
     void Start() {
         cam = Camera.main;
 
-        Debug.WriteLine(Utility.test());
+        Debug.Log(Utility.test());
 
         initPieces();
     }
@@ -77,18 +77,18 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    Vector3 moveToTile(Direction dir, int currentIndex) {
-        switch (dir) {
-            case Direction.FORWARD:
-                return convertIndexToTile(currentIndex + 8);
-            case Direction.RIGHT:
-                return convertIndexToTile(currentIndex + 1);
-            case Direction.BACKWARD:
-                return convertIndexToTile(currentIndex - 8);
-            case Direction.LEFT:
-                return convertIndexToTile(currentIndex - 1);
-        }
-    }
+    // Vector3 moveToTile(Direction dir, int currentIndex) {
+    //     switch (dir) {
+    //         case Direction.FORWARD:
+    //             return convertIndexToTile(currentIndex + 8);
+    //         case Direction.RIGHT:
+    //             return convertIndexToTile(currentIndex + 1);
+    //         case Direction.BACKWARD:
+    //             return convertIndexToTile(currentIndex - 8);
+    //         case Direction.LEFT:
+    //             return convertIndexToTile(currentIndex - 1);
+    //     }
+    // }
 
     // source: the index where the piece currently is before moving
     // destination: the index where the piece is going to move, if valid
