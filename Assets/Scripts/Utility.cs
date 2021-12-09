@@ -9,13 +9,28 @@ class Utility : MonoBehaviour {
         FORWARD,
         BACKWARD, 
         LEFT,
-        RIGHT
+        RIGHT,
+        FORWARD_LEFT,
+        FORWARD_RIGHT,
+        BACKWARD_LEFT,
+        BACKWARD_RIGHT
     }
 
     public static string test() {
         return "This is a test string!";
     }
 
+
+    // visual representation of board indices
+    // 8, 9, 10, 11, 12, 13, 14, 15
+    // 0, 1, 2,  3,  4,  5,  6,  7
+
+    // visual representation of directional movement
+    //  7  8  9
+    // -1  0  1
+    // -9 -8 -7
+
+    // Its not a bug, Its a feature called a wrap around board...
     public static Vector3 moveToTile(Direction dir, int currentIndex) {
         switch (dir) {
             case Direction.FORWARD:
@@ -25,6 +40,14 @@ class Utility : MonoBehaviour {
             case Direction.BACKWARD:
                 return convertIndexToTile(currentIndex - 8);
             case Direction.LEFT:
+                return convertIndexToTile(currentIndex - 1);
+            case Direction.FORWARD_LEFT:
+                return convertIndexToTile(currentIndex + 7);
+            case Direction.FORWARD_RIGHT:
+                return convertIndexToTile(currentIndex + 9);
+            case Direction.BACKWARD_LEFT:
+                return convertIndexToTile(currentIndex - 9);
+            case Direction.BACKWARD_RIGHT:
                 return convertIndexToTile(currentIndex - 1);
             default:
                 return convertIndexToTile(currentIndex);
