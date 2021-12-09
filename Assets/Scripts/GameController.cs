@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
     public GameObject blackKing;
 
     // This object is for keeping track of which tile a piece is on.
-    // Therefore being able to use the index to tell where a piece is on the board.
+    // Therefore being able to use the index to tell where a piece is on the boardLayer.
 
 
     
@@ -33,6 +33,9 @@ public class GameController : MonoBehaviour {
     private RaycastHit[] results = new RaycastHit[5];
     public LayerMask pieceLayer;
     public LayerMask boardLayer;
+
+    public LayerMask tileHover;
+    public LayerMask tileNoHover;
 
     public GameObject draggedObject;
 
@@ -76,31 +79,31 @@ public class GameController : MonoBehaviour {
 
         RaycastHit info;
         Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out info, 100, LayerMask.GetMask("Tile")))
+        if (Physics.Raycast(ray, out info, 100, boardLayer))
         {
             //get the indexes of the tile
-            Vector2Int hitPosition = LookupTileIndex(info.transform.GameObject);
+            Vector2Int hitPosition = LookupTileIndex(info.transform.gameObject);
 
             // if you are hovering a tileafter not hovering a tile
             if (currentHover == -Vector2Int.one)
             {
                 currentHover = hitPosition;
-                tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+                tiles[hitPosition.x, hitPosition.y].layer = tileHover;
             }
             // if we were hovering a tile, and moved to a new one
 
             if (currentHover != -Vector2Int.one)
             {
-                tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+                tiles[currentHover.x, currentHover.y].layer = boardLayer;
                 currentHover = hitPosition;
-                tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+                tiles[hitPosition.x, hitPosition.y].layer = tileHover;
             }
         }
         else
         {
             if (currentHover != -Vector2Int.one)
             {
-                tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+                tiles[currentHover.x, currentHover.y].layer = boardLayer;
                 currentHover = -Vector2Int.one;
             }
         }
@@ -201,7 +204,7 @@ public class GameController : MonoBehaviour {
 
     //     RaycastHit info;
     //     Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
-    //     if (Physics.Raycast(ray, out info, 100, LayerMask.GetMask("Tile")))
+    //     if (Physics.Raycast(ray, out info, 100, board))
     //     {
     //         //get the indexes of the tile
     //         Vector2Int hitPosition = LookupTileIndex(info.transform.GameObject);
@@ -210,22 +213,22 @@ public class GameController : MonoBehaviour {
     //         if (currentHover == -Vector2Int.one)
     //         {
     //             currentHover = hitPosition;
-    //             tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+    //             tiles[hitPosition.x, hitPosition.y].layer = tileHover;
     //         }
     //         // if we were hovering a tile, and moved to a new one
 
     //         if (currentHover != -Vector2Int.one)
     //         {
-    //             tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+    //             tiles[currentHover.x, currentHover.y].layer = board;
     //             currentHover = hitPosition;
-    //             tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+    //             tiles[hitPosition.x, hitPosition.y].layer = tileHover;
     //         }
     //     }
     //     else
     //     {
     //         if (currentHover != -Vector2Int.one)
     //         {
-    //             tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+    //             tiles[currentHover.x, currentHover.y].layer = board;
     //             currentHover = -Vector2Int.one;
     //         }
     //     }
@@ -266,7 +269,7 @@ public class GameController : MonoBehaviour {
 
 
         tileObject.AddComponent<BoxCollider>();
-        tileObject.layer = LayerMask.nameToLayer("Tile");
+        tileObject.layer = boardLayer;
 
         return tileObject;
     }
