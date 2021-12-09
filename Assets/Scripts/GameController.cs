@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
-    public enum Direction {
-        FORWARD,
-        BACKWARD, 
-        LEFT,
-        RIGHT
-    }
-
     public GameObject whitePawn;
     public GameObject whiteRook;
     public GameObject whiteKnight;
@@ -50,7 +43,7 @@ public class GameController : MonoBehaviour {
         cam = Camera.main;
 
         Debug.Log(Utility.test());
-
+        GenerateAllTiles(1, TILE_COUNT_X, TILE_COUNT_Y);
         initPieces();
     }
 
@@ -73,6 +66,42 @@ public class GameController : MonoBehaviour {
                 }
             } else if (!Input.GetButton("Fire1")) {
                 draggedObject = null;
+            }
+        }
+         if (!currentCamera)
+        {
+            currentCamera = Camera.main;
+            return;
+        }
+
+        RaycastHit info;
+        Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out info, 100, LayerMask.GetMask("Tile")))
+        {
+            //get the indexes of the tile
+            Vector2Int hitPosition = LookupTileIndex(info.transform.GameObject);
+
+            // if you are hovering a tileafter not hovering a tile
+            if (currentHover == -Vector2Int.one)
+            {
+                currentHover = hitPosition;
+                tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+            }
+            // if we were hovering a tile, and moved to a new one
+
+            if (currentHover != -Vector2Int.one)
+            {
+                tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+                currentHover = hitPosition;
+                tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+            }
+        }
+        else
+        {
+            if (currentHover != -Vector2Int.one)
+            {
+                tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+                currentHover = -Vector2Int.one;
             }
         }
     }
@@ -141,6 +170,116 @@ public class GameController : MonoBehaviour {
         boardTiles[50] = Instantiate(blackPawn, convertIndexToTile(50),   blackKnight.transform.rotation);
         boardTiles[49] = Instantiate(blackPawn, convertIndexToTile(49),   blackKnight.transform.rotation);
         boardTiles[48] = Instantiate(blackPawn, convertIndexToTile(48),   blackKnight.transform.rotation);
+    }
+
+
+    // ANNAS CODE
+
+    [Header("Art")] 
+    [SerializeField] private Material tileMaterial;
+    [SerializeField] private float tileSize = 1.0f;
+    [SerializeField] private float yOffset = 0.2f;
+    [SerializeField] private Vector3 boardCenter = Vector3.zero;
+
+    private const int TILE_COUNT_X = 8;
+    private const int TILE_COUNT_Y = 8;
+    private GameObject[,] tiles;
+    private Camera currentCamera;
+    private Vector2Int currentHover;
+    private Vector3 bounds;
+    // private void Awake()
+    // {
+    //     GenerateAllTiles(1, TILE_COUNT_X, TILE_COUNT_Y);
+    // }
+    // private void Update()
+    // {
+    //     if (!currentCamera)
+    //     {
+    //         currentCamera = Camera.main;
+    //         return;
+    //     }
+
+    //     RaycastHit info;
+    //     Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
+    //     if (Physics.Raycast(ray, out info, 100, LayerMask.GetMask("Tile")))
+    //     {
+    //         //get the indexes of the tile
+    //         Vector2Int hitPosition = LookupTileIndex(info.transform.GameObject);
+
+    //         // if you are hovering a tileafter not hovering a tile
+    //         if (currentHover == -Vector2Int.one)
+    //         {
+    //             currentHover = hitPosition;
+    //             tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+    //         }
+    //         // if we were hovering a tile, and moved to a new one
+
+    //         if (currentHover != -Vector2Int.one)
+    //         {
+    //             tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+    //             currentHover = hitPosition;
+    //             tiles[hitPosition.x, hitPosition.y].layer = LayerMask.NameToLayer("Hover");
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (currentHover != -Vector2Int.one)
+    //         {
+    //             tiles[currentHover.x, currentHover.y].layer = LayerMask.NameToLayer("Tile");
+    //             currentHover = -Vector2Int.one;
+    //         }
+    //     }
+    // }
+
+    // Generate the board
+    private void GenerateAllTiles(float tileSize, int tileCountX, int tileCountY)
+    {
+        yOffset += transform.position.y;
+        bounds = new Vector3((tileCountX / 2) * tileSize, 0, (tileCountX / 2) * tileSize) + boardCenter;
+
+        tiles = new GameObject[tileCountX, tileCountY];
+        for (int x = 0; x < tileCountX; x++)
+            for (int y = 0; y < tileCountY; y++)
+                tiles[x, y] = GenerateSingleTile(tileSize, x, y);
+    }
+    private GameObject GenerateSingleTile(float tileSize, int x, int y)
+    {
+        GameObject tileObject = new GameObject(string.Format("X:{0}, Y:{1}", x, y));
+        tileObject.transform.parent = transform;
+
+        Mesh mesh = new Mesh();
+        tileObject.AddComponent<MeshFilter>().mesh = mesh;
+        tileObject.AddComponent<MeshRenderer>().material = tileMaterial;
+
+       
+        Vector3[] vertices = new Vector3[4];
+        vertices[0] = new Vector3(x * tileSize, 0, y * tileSize) - bounds;
+        vertices[1] = new Vector3(x * tileSize, 0, (y + 1) * tileSize) - bounds;
+        vertices[2] = new Vector3((x + 1) * tileSize, 0, y * tileSize) - bounds;
+        vertices[3] = new Vector3((x + 1) * tileSize, 0, (y + 1) * tileSize) - bounds;
+
+        int[] tris = new int[] { 0, 1, 2, 1, 3, 2 };
+
+        mesh.vertices = vertices;
+        mesh.triangles = tris;
+        mesh.RecalculateNormals();
+
+
+        tileObject.AddComponent<BoxCollider>();
+        tileObject.layer = LayerMask.nameToLayer("Tile");
+
+        return tileObject;
+    }
+
+    //Operations
+    private Vector2Int LookupTileIndex(GameObject hitInfo)
+    {
+        for (int x = 0; x < TILE_COUNT_X; x++)
+            for (int y = 0; y < TILE_COUNT_Y; y++)
+                for (tiles[x, y] == hitInfo)
+                    return new Vector2Int(x, y);
+
+        return -Vector2Int.one; //invalid
     }
 
 }
