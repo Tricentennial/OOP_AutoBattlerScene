@@ -274,11 +274,13 @@ public class GameController : MonoBehaviour {
     //Operations
     private Vector2Int LookupTileIndex(GameObject hitInfo)
     {
-        for (int x = 0; x < TILE_COUNT_X; x++)
-            for (int y = 0; y < TILE_COUNT_Y; y++)
-                for (tiles[x, y] == hitInfo)
+        for (int x = 0; x < TILE_COUNT_X; x++) {
+            for (int y = 0; y < TILE_COUNT_Y; y++) {
+                if (tiles[x, y] == hitInfo) {
                     return new Vector2Int(x, y);
-
+                }
+            }
+        }
         return -Vector2Int.one; //invalid
     }
 
