@@ -78,8 +78,8 @@ public class GameController : MonoBehaviour {
         }
 
         RaycastHit info;
-        Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out info, 100, boardLayer))
+        Ray ray1 = currentCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray1, out info, 100, boardLayer))
         {
             //get the indexes of the tile
             Vector2Int hitPosition = LookupTileIndex(info.transform.gameObject);
