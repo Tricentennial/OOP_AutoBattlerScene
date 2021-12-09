@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour {
                 }
                 if (draggedObject) {
                     int n = Physics.RaycastNonAlloc(ray, results, 512f, boardLayer);
-                    print(n);
+                    
                     for (int i = 0; i < n; i++) {
                         draggedObject.transform.position = results[i].point;
                     }
@@ -104,7 +104,7 @@ public class GameController : MonoBehaviour {
             if (currentHover != -Vector2Int.one)
             {
                 tiles[currentHover.x, currentHover.y].layer = boardLayer;
-                currentHover = -Vector2Int.one;
+                //currentHover = -Vector2Int.one;
             }
         }
     }
