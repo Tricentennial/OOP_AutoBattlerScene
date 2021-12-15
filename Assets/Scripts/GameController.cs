@@ -109,30 +109,6 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    // Vector3 moveToTile(Direction dir, int currentIndex) {
-    //     switch (dir) {
-    //         case Direction.FORWARD:
-    //             return convertIndexToTile(currentIndex + 8);
-    //         case Direction.RIGHT:
-    //             return convertIndexToTile(currentIndex + 1);
-    //         case Direction.BACKWARD:
-    //             return convertIndexToTile(currentIndex - 8);
-    //         case Direction.LEFT:
-    //             return convertIndexToTile(currentIndex - 1);
-    //     }
-    // }
-
-    // source: the index where the piece currently is before moving
-    // destination: the index where the piece is going to move, if valid
-    Vector3 moveToTile(int source, int destination) {
-        // Check if index is a valid move
-        return new Vector3(0f,0f,0f);
-    }
-
-    int convertTileToCoordinates(int index) {
-        return 0;
-    }
-
     Vector3 convertIndexToTile(int index) {
         float x = (index % 8 * 12.7f) + 5.5f;
         float z = (float)((System.Math.Floor(index/8.0) * 12.7f) + 5.5f);
@@ -190,49 +166,6 @@ public class GameController : MonoBehaviour {
     private Camera currentCamera;
     private Vector2Int currentHover;
     private Vector3 bounds;
-    // private void Awake()
-    // {
-    //     GenerateAllTiles(1, TILE_COUNT_X, TILE_COUNT_Y);
-    // }
-    // private void Update()
-    // {
-    //     if (!currentCamera)
-    //     {
-    //         currentCamera = Camera.main;
-    //         return;
-    //     }
-
-    //     RaycastHit info;
-    //     Ray ray = currentCamera.ScreenPointToRay(Input.mousePosition);
-    //     if (Physics.Raycast(ray, out info, 100, board))
-    //     {
-    //         //get the indexes of the tile
-    //         Vector2Int hitPosition = LookupTileIndex(info.transform.GameObject);
-
-    //         // if you are hovering a tileafter not hovering a tile
-    //         if (currentHover == -Vector2Int.one)
-    //         {
-    //             currentHover = hitPosition;
-    //             tiles[hitPosition.x, hitPosition.y].layer = tileHover;
-    //         }
-    //         // if we were hovering a tile, and moved to a new one
-
-    //         if (currentHover != -Vector2Int.one)
-    //         {
-    //             tiles[currentHover.x, currentHover.y].layer = board;
-    //             currentHover = hitPosition;
-    //             tiles[hitPosition.x, hitPosition.y].layer = tileHover;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         if (currentHover != -Vector2Int.one)
-    //         {
-    //             tiles[currentHover.x, currentHover.y].layer = board;
-    //             currentHover = -Vector2Int.one;
-    //         }
-    //     }
-    // }
 
     // Generate the board
     private void GenerateAllTiles(float tileSize, int tileCountX, int tileCountY)
